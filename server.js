@@ -7,21 +7,23 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// PORT WAJIB PAKAI ENV (buat deploy)
-const PORT = process.env.PORT || 3000;
-
-// serve file static (HTML, CSS, JS)
+// 🔥 WAJIB: serve folder public
 app.use(express.static(path.join(__dirname, "public")));
 
-// test route biar ga "Cannot GET /"
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-// socket.io
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   console.log("User connected:", socket.id);
 
-  socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+  socket.on("chat", msg => {
+    io.emit("chat", msg);
   });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+});
+
+// 🔥 WAJIB untuk Railway
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log("Server running on port", PORT);
+});
