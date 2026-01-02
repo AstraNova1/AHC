@@ -1,36 +1,43 @@
-// server.js
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const path = require('path');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// 🔥 INI PENTING (serve HTML)
-app.use(express.static(__dirname));
+// 🔥 WAJIB: biar index.html bisa dibuka
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
+// Simpan user online
 let users = {};
 
-io.on('connection', socket => {
-  console.log('User connected:', socket.id);
+// Socket.IO
+io.on("connection", socket => {
+  console.log("User connected:", socket.id);
 
-  socket.on('join', ({ userId, name }) => {
+  socket.on("join", ({ userId, name }) => {
     users[socket.id] = { userId, name };
-    io.emit('users', Object.values(users));
+    io.emit("users", Object.values(users));
   });
 
-  socket.on('message', msg => {
-    io.emit('message', msg);
+  socket.on("message", msg => {
+    io.emit("message", msg);
   });
 
-  socket.on('disconnect', () => {
+  socket.on("disconnect", () => {
     delete users[socket.id];
-    io.emit('users', Object.values(users));
+    io.emit("users", Object.values(users));
+    console.log("User disconnected:", socket.id);
   });
 });
 
-server.listen(3000, () => {
-  console.log('✅ Al-Hamid Chat running on http://localhost:3000');
+// 🔥 INI BAGIAN PORT YANG WAJIB UNTUK DEPLOY
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log("✅ Server running on port", PORT);
 });
