@@ -7,22 +7,23 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// 🔥 WAJIB: serve folder public
+// Serve file frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-io.on("connection", socket => {
+// Socket
+io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  socket.on("chat", msg => {
+  socket.on("chat", (msg) => {
     io.emit("chat", msg);
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected");
+    console.log("User disconnected:", socket.id);
   });
 });
 
-// 🔥 WAJIB untuk Railway
+// Railway PORT
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log("Server running on port", PORT);
