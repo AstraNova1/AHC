@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Selamat Jadian Kafi & Fyza</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Georgia,serif;
+background:linear-gradient(135deg,#ffd6e7,#e6ccff);
+text-align:center;
+overflow-x:hidden;
+}
+
+/* amplop */
+
+.envelope{
+width:320px;
+height:200px;
+background:#ff8fb1;
+margin:120px auto;
+position:relative;
+border-radius:6px;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+border-left:160px solid transparent;
+border-right:160px solid transparent;
+border-top:100px solid #ff6f9f;
+}
+
+/* surat */
+
+.letter{
+display:none;
+max-width:800px;
+margin:auto;
+background:white;
+padding:40px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+animation:fade 2s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+h1{
+color:#ff4f8b;
+font-size:40px;
+}
+
+.names{
+font-size:30px;
+color:#7a4cff;
+margin:20px 0;
+}
+
+.photos{
+display:flex;
+justify-content:center;
+gap:40px;
+flex-wrap:wrap;
+margin:30px 0;
+}
+
+.photos img{
+width:220px;
+border-radius:20px;
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+transition:transform 0.4s;
+}
+
+.photos img:hover{
+transform:scale(1.05);
+}
+
+.message{
+font-size:18px;
+line-height:1.6;
+color:#444;
+}
+
+/* hati jatuh */
+
+.heart{
+position:fixed;
+top:-10px;
+font-size:20px;
+color:#ff4f8b;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="envelope" onclick="openLetter()"></div>
+
+<div class="letter" id="letter">
+
+<h1>💌 Selamat jadian</h1>
+
+<p class="message">
+Hari ini bukan sekadar hari biasa.  
+Hari ini adalah hari dimana dua cerita mulai berjalan bersama.
+</p>
+
+<div class="names">
+Kafanal Kafi ❤️ Fyza Khairunisa
+</div>
+
+<div class="photos">
+<img src="kafi.png" alt="Kafanal Kafi">
+<img src="fyza.png" alt="Fyza Khairunisa">
+</div>
+
+<p class="message">
+Selamat atas kisah baru yang kalian mulai hari ini.  
+Semoga hubungan ini dipenuhi tawa, kesabaran, dan kenangan indah.
+</p>
+
+<p class="message">
+Semoga langkah kalian selalu searah,  
+hati kalian selalu saling menguatkan,  
+dan cerita ini menjadi salah satu kisah terindah.
+</p>
+
+<h2>✨ Selamat jadian wirr! ✨</h2>
+
+</div>
+
+<script>
+
+function openLetter(){
+document.querySelector(".envelope").style.display="none";
+document.getElementById("letter").style.display="block";
+}
+
+setInterval(()=>{
+
+let heart=document.createElement("div")
+heart.classList.add("heart")
+heart.innerHTML="❤"
+
+heart.style.left=Math.random()*100+"vw"
+heart.style.animationDuration=(Math.random()*3+3)+"s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),6000)
+
+},300)
+
+</script>
+
+</body>
+</html>
